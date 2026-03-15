@@ -37,7 +37,7 @@ spec:
               echo "auth-service is ready. Starting flag-service."
       containers:
         - name: app-flag-service
-          image: REPLACE_ECR_REGISTRY/togglemaster_flag-service:latest
+          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_flag-service:0b9fef3c081522fde0e61919d9b9761471a06e6f
           imagePullPolicy: Always
           ports:
             - containerPort: 8002
