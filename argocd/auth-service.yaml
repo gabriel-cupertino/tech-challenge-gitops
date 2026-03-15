@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: auth-service
+  namespace: argocd
+  # Finalizer garante que ArgoCD deleta os recursos no cluster ao deletar a Application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/gabriel-cupertino/tech-challenge-gitops.git
+    targetRevision: main
+    path: auth-service
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: auth-service
+  syncPolicy:
+    automated:
+      prune: true       # Remove recursos deletados do gitops repo
+      selfHeal: true    # Reverte alterações manuais feitas direto no cluster
+    syncOptions:
+      - CreateNamespace=false  # Namespace criado pelo Terraform

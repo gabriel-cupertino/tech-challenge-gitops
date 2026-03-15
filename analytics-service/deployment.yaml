@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-analytics-service
+  name: app-analytics-service
+  namespace: analytics-service
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-analytics-service
+  template:
+    metadata:
+      labels:
+        app: app-analytics-service
+    spec:
+      # analytics-service não depende de outros microsserviços para iniciar.
+      # Consome da fila SQS e escreve no DynamoDB diretamente.
+      # A tabela DynamoDB é criada pelo Terraform (não precisa de init job).
+      containers:
+        - name: app-analytics-service
+          image: REPLACE_ECR_REGISTRY/togglemaster_analytics-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8005
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8005
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8005
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          envFrom:
+            - secretRef:
+                name: analytics-db-secret       # AWS_SQS_URL, AWS_DEFAULT_REGION, DYNAMODB_TABLE
+            - secretRef:
+                name: analytics-db-secret-host  # AWS credentials (injetadas via IRSA ou Secret)
