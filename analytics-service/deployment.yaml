@@ -24,7 +24,7 @@ spec:
       # A tabela DynamoDB é criada pelo Terraform (não precisa de init job).
       containers:
         - name: app-analytics-service
-          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_analytics-service:1f4b7cb4b73a14373a24c2279f1b7bf23eb56194
+          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_analytics-service:34786bef6b6891f7a511bf4d1f2fa3bd396cda12
           imagePullPolicy: Always
           ports:
             - containerPort: 8005
