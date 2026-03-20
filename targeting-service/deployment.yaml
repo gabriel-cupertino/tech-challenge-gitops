@@ -37,7 +37,7 @@ spec:
               echo "auth-service is ready. Starting targeting-service."
       containers:
         - name: app-targeting-service
-          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_targeting-service:fe52fcddbc1df06c1f18565077336cbdb2bc9a66
+          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_targeting-service:34786bef6b6891f7a511bf4d1f2fa3bd396cda12
           imagePullPolicy: Always
           ports:
             - containerPort: 8003
