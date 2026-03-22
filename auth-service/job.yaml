@@ -15,7 +15,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: psql
-          image: postgres:15-alpine # Use alpine aqui também por segurança
+          image: postgres:15-alpine 
           command: ["sh", "-c"]
           args:
             - |
@@ -37,7 +37,7 @@ spec:
               mountPath: /sql
           envFrom:
             - secretRef:
-                name: auth-db-secret # O Secret que você criará manualmente/via Terraform
+                name: auth-db-secret 
             - secretRef:
                 name: auth-db-secret-host
       volumes:
