@@ -55,7 +55,7 @@ spec:
               echo "targeting-service is ready. Starting evaluation-service."
       containers:
         - name: app-evaluation-service
-          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_evaluation-service:34786bef6b6891f7a511bf4d1f2fa3bd396cda12
+          image: 834615370464.dkr.ecr.us-east-1.amazonaws.com/togglemaster_evaluation-service:e574250c2e06f67784c3ccbd984d97d3c4a4daca
           imagePullPolicy: Always
           ports:
             - containerPort: 8004
